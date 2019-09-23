@@ -120,7 +120,8 @@ load_schemas(Path, ParserFun, ValidationFun, MakeKeyFun) ->
 -spec validate( Schema :: any()
               , Data   :: json_term() | binary()
               ) -> {ok, json_term()}
-                 | jesse_error:error().
+                 | jesse_error:error()
+                 | jesse_database:error().
 validate(Schema, Data) ->
   validate(Schema, Data, []).
 
@@ -136,7 +137,8 @@ validate(Schema, Data) ->
               , Data     :: json_term() | binary()
               , Options  :: options()
               ) -> {ok, json_term()}
-                 | jesse_error:error().
+                 | jesse_error:error()
+                 | jesse_database:error().
 validate(Schema, Data, Options) ->
   try
     ok = init_deps(Options),

@@ -35,8 +35,15 @@
         , update/4
         ]).
 
--export_type([ update_result/0
+-export_type([ update_result/0,
+               error/0
              ]).
+
+-type error() :: {error, error_reason()}.
+-type error_reason() :: { 'database_error'
+                        , Key :: string()
+                        , 'schema_not_found'
+                        }.
 
 -type update_result() :: ok | [fail()].
 
