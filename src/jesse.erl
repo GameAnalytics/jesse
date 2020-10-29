@@ -141,8 +141,6 @@ validate(Schema, Data) ->
                  | jesse_database:error().
 validate(Schema, Data, Options) ->
   try
-    ok = init_deps(Options),
-
     ParserFun  = proplists:get_value(parser_fun, Options, fun(X) -> X end),
     ParsedData = try_parse(data, ParserFun, Data),
     JsonSchema = jesse_database:read(Schema),
@@ -175,8 +173,6 @@ validate_with_schema(Schema, Data) ->
                              | jesse_error:error().
 validate_with_schema(Schema, Data, Options) ->
   try
-    ok = init_deps(Options),
-
     ParserFun    = proplists:get_value(parser_fun, Options, fun(X) -> X end),
     ParsedSchema = try_parse(schema, ParserFun, Schema),
     ParsedData   = try_parse(data, ParserFun, Data),
@@ -198,12 +194,6 @@ try_parse(Type, ParserFun, JsonBin) ->
         schema -> throw({schema_error, {parse_error, Error}})
       end
   end.
-
-%%TODO: check if custom http client is used
-%%TODO: prevent reloading of already loaded stuff
-init_deps(_Options) ->
-  application:start(inets),
-  ok.
 
 %%% Local Variables:
 %%% erlang-indent-level: 2
